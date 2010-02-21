@@ -1,0 +1,58 @@
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />    
+  <title>The source code</title>
+    <link href="../resources/prettify/prettify.css" type="text/css" rel="stylesheet" />
+    <script type="text/javascript" src="../resources/prettify/prettify.js"></script>
+</head>
+<body  onload="prettyPrint();">
+    <pre class="prettyprint lang-js">Ext.ns("TKE.list");
+
+TKE.list.EmployeeList = Ext.extend(Ext.ListView, {
+    singleSelect  : true,
+    style         : 'background-color: #FFFFFF;',
+    columns       : [
+        {
+            header    : 'Last Name',
+            dataIndex : 'lastName'
+        },
+        {
+            header    : 'First Name',
+            dataIndex : 'firstName'
+        }
+    ],
+
+    initComponent : function() {
+        this.store = this.buildStore();
+
+        TKE.list.EmployeeList.superclass.initComponent.call(this);
+    },
+    buildStore : function() {
+
+         return {
+             xtype       : 'jsonstore',
+             autoLoad    : this.autoLoad || false,
+             url         : this.url,
+             fields      : [ 'lastName', 'firstName', 'id'],
+             sortInfo    :  {
+                 field     : 'lastName',
+                 direction : 'ASC'
+             }
+         };
+    },
+    createAndSelectRecord : function(o) {
+        var record = new this.store.recordType(o);
+        this.store.addSorted(record);
+        var index = this.store.indexOf(record);           
+        this.select(index);
+        return record;
+    },
+    clearView : function() {
+        this.store.removeAll();
+    }
+    
+
+});
+Ext.reg('employeelist', TKE.list.EmployeeList);</pre>    
+</body>
+</html>

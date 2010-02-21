@@ -1,0 +1,302 @@
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />    
+  <title>The source code</title>
+    <link href="../resources/prettify/prettify.css" type="text/css" rel="stylesheet" />
+    <script type="text/javascript" src="../resources/prettify/prettify.js"></script>
+</head>
+<body  onload="prettyPrint();">
+    <pre class="prettyprint lang-js">Ext.ns("CompanyMgr");
+//Ext.chart.Chart.CHART_URL='resources/js/ext3/resources/charts.swf';
+Ext.chart.Chart.CHART_URL='resources/js/overrides/chart/charts.swf';
+
+<div id="cls-CompanyMgr.workspace"></div>/**
+ * @class CompanyMgr.workspace
+ * NEEDS DESCRIPTION
+ * <br />
+ * @constructor
+ * @singleton
+ **/
+CompanyMgr.workspace = function() {
+    Ext.QuickTips.init();
+    var viewport, cardPanel, loginWindow,
+        cookieUtil = Ext.util.Cookies;
+
+    return {
+        init : function() {
+            var cookie = cookieUtil.get('loginCookie');
+            if (cookie) {
+                this.showViewport();
+            }
+            else {
+                this.showLoginWindow();
+            }
+        },
+
+        showLoginWindow : function() {
+            if (! loginWindow) {
+                loginWindow = this.constructLoginWindow();
+            }
+
+            loginWindow.show();
+        },
+        
+        constructLoginWindow : function() {
+            var formItemDefaults = {
+            allowBlank : false,
+            anchor     : '-5',
+            listeners  : {
+                scope      : this,
+                specialkey : function(field, e) {
+                        if (e.getKey() === e.ENTER) {
+                            this.doLogin();
+                        }
+                    }
+                }
+            };
+
+            var formLoginItems = [
+                {
+                    fieldLabel : 'User Name',
+                    name       : 'user'
+                },
+                {
+                    inputType  : 'password',
+                    fieldLabel : 'Password',
+                    name       : 'password'
+                }
+            ];
+
+            return  new Ext.Window({
+                width     : 250,
+                height    : 125,
+                modal     : true,
+                draggable : false,
+                title     : 'Login to Department Manager',
+                layout    : 'fit',
+                center    : true,
+                closable  : false,
+                resizable : false,
+                border    : false,
+                items     : {
+                    xtype       : 'form',
+                    defaultType : 'textfield',
+                    labelWidth  : 70,
+                    frame       : true,
+                    url         : 'userlogin.php',
+                    labelAlign  : 'right',
+                    defaults    : formItemDefaults,
+                    items       : formLoginItems
+                },
+                buttons : [
+                    {
+                        text    : 'Login',
+                        handler : this.doLogin,
+                        scope   : this
+                    }
+                ]
+            });
+        },
+
+        doLogin :  function() {
+            var form = loginWindow.get(0);
+            if (form.getForm().isValid()) {
+                loginWindow.el.mask('Please wait...', 'x-mask-loading');
+
+                form.getForm().submit({
+                    success : this.onLoginSuccess,
+                    failure : this.onLoginFailure,
+                    scope   : this
+                });
+            }
+        },
+
+        onLoginSuccess : function() {
+            loginWindow.el.unmask();
+            var cookie = cookieUtil.get('loginCookie');
+            if (cookie) {
+                loginWindow.destroy();
+                loginWindow = null;
+                Ext.getBody().mask('Building UI', 'x-mask-loading');
+                this.showViewport();
+            }
+            else {
+                this.onLoginFailure();
+            }
+        },
+
+        onLoginFailure : function() {
+            loginWindow.el.unmask();
+            Ext.MessageBox.alert('Failure', "Login failed. Please try again");
+        },
+
+        showViewport : function() {
+            if (! viewport) {
+                cardPanel = new Ext.Panel({
+                    layout     : 'card',
+                    activeItem : 0,
+                    border     : false,
+                    items      :  {
+                        xtype   : 'company_snapshot_panel'
+                    },
+                    tbar       : [
+                        {
+                            text          : 'Dashboard',
+                            iconCls       : 'icon-chart_curve',
+                            scope         : this,
+                            toggleGroup   : 'navGrp',
+                            itemType      : 'company_snapshot_panel',
+                            enableToggle  : true,
+                            pressed       : true,
+                            handler       : this.onSwitchPanel
+                        },
+                        '-',
+                        {
+                            text         : 'Manage Departments',
+                            iconCls      : 'icon-group_edit',
+                            itemType     : 'CompanyMgr_manage_departments',
+                            toggleGroup  : 'navGrp',
+                            enableToggle : true,
+                            scope        : this,
+                            handler      : this.onSwitchPanel
+                        },
+                        {
+                            text         : 'Manage Employees',
+                            iconCls      : 'icon-user_edit',
+                            itemType     : 'CompanyMgr_manage_employees',
+                            toggleGroup  : 'navGrp',
+                            enableToggle : true,
+                            scope        : this,
+                            handler      : this.onSwitchPanel
+                        },
+                        '->',
+                        {
+                            text     : 'Log out',
+                            iconCls  : 'icon-door_out',
+                            scope    : this,
+                            handler  : this.onLogOut
+                        }
+                    ]
+                });
+
+                viewport = new Ext.Viewport({
+                    layout : 'fit',
+                    items  : cardPanel
+                });
+                Ext.getBody().unmask();
+            }
+        },
+
+        switchToCard : function(newCardIndex) {
+            var layout       = cardPanel.getLayout(),
+            activePanel      = layout.activeItem,
+            activePanelIndex = cardPanel.items.indexOf(activePanel);
+
+            if (activePanelIndex !== newCardIndex) {
+                var  newPanel = cardPanel.items.itemAt(newCardIndex);
+                this.inTransition = true;
+
+                activePanel.el.fadeOut({
+                    scope    : this,
+                    callback : function() {
+                        layout.setActiveItem(newCardIndex);
+                        newPanel.el.fadeIn();
+                        newPanel.doLayout();
+                        this.inTransition = false;
+                        if(newPanel.cleanSlate) {
+                            newPanel.cleanSlate();
+                        }
+                    }
+                });
+            }
+
+        },
+
+        onSwitchPanel : function(btn) {
+            if (!btn.pressed) {
+                btn.toggle(true, true);   
+            }
+            if (this.inTransition === true) {
+                return;
+            }
+            var xtype  = btn.itemType,
+                panels = cardPanel.findByType(xtype),
+                newPanel;
+
+            if (panels.length < 1) {
+                newPanel = cardPanel.add({
+                    xtype     : xtype,
+                    workspace : this
+                });
+                cardPanel.doLayout();
+            }
+            else {
+                newPanel = panels[0];
+            }
+
+            var newCardIndex = cardPanel.items.indexOf(newPanel);
+            this.switchToCard(newCardIndex)
+        },
+
+
+        onLogOut : function() {
+            Ext.MessageBox.confirm(
+                'Please confirm',
+                'Are you sure you want to log out?',
+                function(btn) {
+                    if (btn === 'yes') {
+                       this.doLogOut();
+                    }
+                },
+                this
+            );
+        },
+
+        onAfterAjaxReq : function(options, success, result) {
+            if (success) {
+                var jsonData;
+                try {
+                    jsonData = Ext.decode(result.responseText);
+                }
+                catch (e) {
+                    Ext.MessageBox.alert('Error!', 'Data returned is not valid data!');
+                }
+
+                options.succCallback.call(options.scope, jsonData, options);
+
+            }
+            else {
+                Ext.MessageBox.alert('Error!', 'The web transaction failed!');
+            }
+            Ext.getBody().unmask();
+        },
+
+        doLogOut : function() {
+            Ext.Ajax.request({
+                url    : 'userlogout.php',
+                params : {
+                    user : cookieUtil.get('loginCookie')
+                },
+                scope    : this,
+                callback : this.onAfterLogout
+            });
+        },
+
+        onAfterLogout : function(jsonData) {
+            this.destroy();
+        },
+        
+        destroy : function() {
+            cookieUtil.clear('loginCookie');
+            viewport.destroy();
+            viewport = null;
+            this.init();
+        }
+        
+    }
+}();
+
+
+Ext.onReady(CompanyMgr.workspace.init, CompanyMgr.workspace);</pre>    
+</body>
+</html>

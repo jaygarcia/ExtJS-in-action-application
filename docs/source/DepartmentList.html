@@ -1,0 +1,66 @@
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />    
+  <title>The source code</title>
+    <link href="../resources/prettify/prettify.css" type="text/css" rel="stylesheet" />
+    <script type="text/javascript" src="../resources/prettify/prettify.js"></script>
+</head>
+<body  onload="prettyPrint();">
+    <pre class="prettyprint lang-js">Ext.ns("TKE.list");
+
+TKE.list.DepartmentList = Ext.extend(Ext.ListView, {
+    singleSelect  : true,
+    style         : 'background-color: #FFFFFF;',
+    columns       : [
+        {
+            header    : 'Department Name',
+            dataIndex : 'name'
+        }
+    ],
+
+    initComponent : function() {
+        this.store = this.buildStore();
+
+        TKE.list.DepartmentList.superclass.initComponent.call(this);
+    },
+    buildStore : function() {
+
+        var store = new Ext.data.JsonStore({
+            autoLoad : this.autoLoad || false,
+            url      : this.url,
+            fields   : [ 'name', 'id' ],
+            sortInfo : {
+                field : 'name',
+                dir   : 'ASC'
+            }
+        });
+        
+        this.relayEvents(store, ['load']);
+        return store;
+    },
+    refreshView : function() {
+        this.store.reload();
+    },
+    selectByDepartmentId : function(id) {
+        id = id || false;
+        if (id) {
+            var ind = this.store.find('id', id);
+            this.select(ind);
+        }
+    },
+    clearView : function() {
+        this.store.removeAll();
+    },
+    createAndSelectRecord : function(o) {
+        var record = new this.store.recordType(o);
+        this.store.addSorted(record);
+        var index = this.store.indexOf(record);
+        this.select(index);
+        return record;
+    }
+});
+Ext.reg('departmentlist', TKE.list.DepartmentList);
+
+</pre>    
+</body>
+</html>

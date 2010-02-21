@@ -1,0 +1,94 @@
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />    
+  <title>The source code</title>
+    <link href="../resources/prettify/prettify.css" type="text/css" rel="stylesheet" />
+    <script type="text/javascript" src="../resources/prettify/prettify.js"></script>
+</head>
+<body  onload="prettyPrint();">
+    <pre class="prettyprint lang-js">Ext.ns('TKE.grid');
+
+
+TKE.grid.EmployeesGridPanel = Ext.extend(Ext.grid.GridPanel, {
+    viewConfig : { forceFit : true },
+    initComponent : function() {
+        Ext.applyIf(this, {
+            columns    : this.buildColumns(),
+            store      : this.buildStore()
+        });
+        TKE.grid.EmployeesGridPanel.superclass.initComponent.call(this);
+    },
+    buildStore : function() {
+        return  {
+            url      : this.url,
+            xtype    : 'jsonstore',
+            autoLoad : false,
+            fields   : [
+                'id', 'lastName', 'firstName', 'email',
+                'dateHired', 'rate', 'departmentId'
+            ],
+            sortInfo : {
+                field : 'lastName',
+                dir   : 'ASC'
+            }
+        };
+    },
+    buildColumns : function() {
+        return [
+            {
+                header    : 'Last Name',
+                dataIndex : 'lastName',
+                sortable  : true
+            },
+            {
+                header    : 'First Name',
+                dataIndex : 'firstName',
+                sortable  : true
+            },
+            {
+                header    : 'Email',
+                dataIndex : 'email',
+                sortable  : true
+            },
+            {
+                header    : 'Date Hired',
+                dataIndex : 'dateHired',
+                sortable  : true
+            },
+            {
+                header    : 'Rate',
+                dataIndex : 'rate',
+                sortable  : true,
+                renderer  : Ext.util.Format.usMoney
+            }
+        ];
+
+    },
+  
+    add : function(r) {
+        var store = this.store;
+        var sortInfo = store.sortInfo;
+        store.add(r || []);
+        store.sort(sortInfo.field, sortInfo.direction);
+    },
+    loadData : function(d) {
+        return this.store.loadData(d);
+    },
+    load : function(o) {
+        return this.store.load(o);
+    },
+    removeAll : function() {
+        return this.store.removeAll();
+    },
+    
+    remove    : function(r) {
+        return this.store.remove(r);
+    },
+    getSelected : function() {
+        return this.selModel.getSelections();
+    }
+});
+
+Ext.reg('employee_gridpanel', TKE.grid.EmployeesGridPanel)</pre>    
+</body>
+</html>

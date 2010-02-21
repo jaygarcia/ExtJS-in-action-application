@@ -1,0 +1,144 @@
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />    
+  <title>The source code</title>
+    <link href="../resources/prettify/prettify.css" type="text/css" rel="stylesheet" />
+    <script type="text/javascript" src="../resources/prettify/prettify.js"></script>
+</head>
+<body  onload="prettyPrint();">
+    <pre class="prettyprint lang-js">Ext.ns("TKE.window");
+<div id="cls-TKE.window.EmployeeSelectionWindow"></div>/**
+ * @class TKE.window.EmployeeSelectionWindow
+ * @extends Ext.Window
+ * This is a sample class <br/>
+ * @version 1.0
+ * @demo test
+ * @brick brick-icon
+ * @consturctor
+ */
+/**
+ * @class TKE.window.EmployeeSelectionWindow
+ * @extends Ext.Wikndow
+ * An Ext.Window implementation that contains at least two implementations of {@link TKE.chart.ChartPanelBaseCls}.  <br />
+ * The first (left) chart is a
+ * It uses the {@link Ext.layout.VboxLayout vbox} layout to organize the {@link TKE.chart.ChartPanelBaseCls} implementations.
+ * <br />
+ * @constructor
+ * @param {Object} config The config object
+ * @xtype company_snapshot_panel
+ **/
+
+TKE.window.EmployeeSelectionWindow = Ext.extend(Ext.Window, {
+    width          : 600,
+    height         : 400,
+    maxWidth       : 600,
+    maxHeight      : 500,
+    layout         : 'hbox',
+    modal          : true,
+    border         : false,
+    closable       : false,
+    center         : true,
+    constrain      : true,
+    resizable      : true,
+    departmentName : ' ',
+    layoutConfig   :  { align : 'stretch' },
+    initComponent  : function() {
+        this.departmentsLVPanel = this.buildListViewPanel();
+        this.employeesGridPanel = this.buildGridPanel();
+
+        Ext.apply(this, {
+            title   : 'Add employees to ' + this.departmentName, 
+            buttons : this.buildButtons(),
+            items   : [
+                this.departmentsLVPanel,
+                this.employeesGridPanel
+            ]
+        });
+
+        TKE.window.EmployeeSelectionWindow.superclass.initComponent.call(this);
+        this.addEvents({
+            assocemployees : true
+        });
+    },
+    buildButtons : function() {
+         return [
+            {
+                 text    : 'Close',
+                 iconCls : 'icon-cross',
+                 scope   : this,
+                 handler : this.onClose
+            },
+            {
+                text    : 'Add',
+                iconCls : 'icon-user_add',
+                scope   : this,
+                handler : this.onAddToDepartment
+            }
+            
+        ];
+    },
+    onClose : function() {
+        this.close();    
+    },
+    onAddToDepartment : function() {
+        var selectedRecords = this.employeesGridPanel.getSelected();
+
+        if (selectedRecords.length > 0) {
+           this.fireEvent('assocemployees', selectedRecords, this.employeesGridPanel, this);
+        }
+
+    },
+    onConfirmAddToDepartment : function(btn) {
+
+    },
+    buildListViewPanel : function() {
+        this.departmentsLV =  new TKE.list.DepartmentList({
+            autoLoad  : true,
+            url       : 'departments/getList',
+            listeners : {
+                scope : this,
+                click : this.onDepartmentListClick,
+                load  : this.onDepartmentStoreLoad
+            }
+        });
+
+        
+        return  {
+            title     : 'Departments',
+            layout    : 'fit',
+            frame     : true,
+            bodyStyle : 'border: 1px solid #99BBE8;',
+            width     : 150,
+            split     : true,
+            items     : this.departmentsLV
+        }
+    },
+    buildGridPanel : function() {
+        return new TKE.grid.EmployeesGridPanel({
+            url      : 'employees/listForDepartment',
+            loadMask : true,
+            frame    : true,
+            title    : 'Employees',
+            flex     : 1
+        });
+    },
+    onDepartmentListClick : function() {
+        var record = this.departmentsLV.getSelectedRecords()[0];
+        this.employeesGridPanel.load({
+            params : {
+                id : record.get('id')
+            }
+        })
+
+    },
+    onDepartmentStoreLoad : function(store) {
+        var deptRecInd = store.find('id', this.departmentId);
+        store.remove(store.getAt(deptRecInd));
+    },
+    refreshGridPanel : function() {
+        this.employeesGridPanel.store.reload();
+    }
+
+});</pre>    
+</body>
+</html>

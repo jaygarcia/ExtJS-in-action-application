@@ -1,0 +1,4 @@
+RewriteEngine on
+# exclode these
+RewriteCond $1 !^(index\.php|userlogin\.php|userlogout\.php|user_guide|docs|resources|images|ext3|robots\.txt)
+RewriteRule ^(.*)$ /index.php/$1 [L]
