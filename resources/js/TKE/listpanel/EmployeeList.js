@@ -2,13 +2,13 @@ Ext.ns("TKE.listpanel");
 
 /**
  * @class TKE.listpanel.EmployeeList
- * @extends TKE.listpanel.ListPanelBaseClass
- * A configuration instance of {@link TKE.listpanel.ListPanelBaseClass}
+ * @extends TKE.listpanel.ListPanelBaseCls
+ * A configuration instance of {@link TKE.listpanel.ListPanelBaseCls}
  * <br />
  * @constructor
  * @param {Object} config The config object
  **/
-TKE.listpanel.EmployeeList = Ext.extend(TKE.listpanel.ListPanelBaseClass, {
+TKE.listpanel.EmployeeList = Ext.extend(TKE.listpanel.ListPanelBaseCls, {
     url           : 'employees/listForDepartment',
     buildListView : function() {
         return {

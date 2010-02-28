@@ -3,9 +3,9 @@ Ext.ns("TKE.window");
 /**
  * @class TKE.window.EmployeeAssociationWindow
  * @extends Ext.Window
- * An Ext.Window implementation that contains at least two implementations of {@link TKE.chartpanel.ChartPanelBaseClass}.  <br />
+ * An Ext.Window implementation that contains at least two implementations of {@link TKE.chartpanel.ChartPanelBaseCls}.  <br />
  * The first (left) chart is a
- * It uses the {@link Ext.layout.VBoxLayout vbox} layout to organize the {@link TKE.chartpanel.ChartPanelBaseClass} implementations.
+ * It uses the {@link Ext.layout.VBoxLayout vbox} layout to organize the {@link TKE.chartpanel.ChartPanelBaseCls} implementations.
  * <br />
  * @constructor
  * @param {Object} config The config object

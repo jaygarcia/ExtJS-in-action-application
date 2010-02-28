@@ -2,14 +2,14 @@ Ext.ns("TKE.form");
 
 /**
  * @class TKE.form.EmployeeForm
- * @extends TKE.form.FormPanelBaseClass
+ * @extends TKE.form.FormPanelBaseCls
  *  An Ext.form.FormPanel implementation that contains a number of fields to manage employee data
  * <br />
  * @constructor
  * @param {Object} config The config object
  * @xtype employeeform
  **/
-TKE.form.EmployeeForm = Ext.extend(TKE.form.FormPanelBaseClass, {
+TKE.form.EmployeeForm = Ext.extend(TKE.form.FormPanelBaseCls, {
     border        : true,
     autoScroll    : true,
     bodyStyle     : 'background-color: #DFE8F6; padding: 10px',

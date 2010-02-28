@@ -2,7 +2,7 @@ Ext.ns("TKE.form");
 
 /**
  * @class TKE.form.DepartmentForm
- * @extends TKE.form.FormPanelBaseClass
+ * @extends TKE.form.FormPanelBaseCls
  * An Ext.Panel implementation that contains all of the fields to manage departments, including an instance of
  * {@link TKE.grid.EmployeeGridPanel Employee Grid Panel class}.
  * <br />
@@ -10,7 +10,7 @@ Ext.ns("TKE.form");
  * @param {Object} config The config object
  * @xtype dept_form
  **/
-TKE.form.DepartmentForm = Ext.extend(TKE.form.FormPanelBaseClass, {
+TKE.form.DepartmentForm = Ext.extend(TKE.form.FormPanelBaseCls, {
     //private
     style         : 'border-top: 0px;',
 

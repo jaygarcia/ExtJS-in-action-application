@@ -15,13 +15,13 @@
     <script type="text/javascript" src="resources/js/overrides/chart/Chart.js"></script>
 
     <!-- TKE Sub-framework JavaScript -->
-    <script type="text/javascript" src="resources/js/TKE/chartpanel/ChartPanelBaseClass.js"></script>
+    <script type="text/javascript" src="resources/js/TKE/chartpanel/ChartPanelBaseCls.js"></script>
     <script type="text/javascript" src="resources/js/TKE/chartpanel/DepartmentBreakdown.js"></script>
     <script type="text/javascript" src="resources/js/TKE/chartpanel/CompanySnapshot.js"></script>
-    <script type="text/javascript" src="resources/js/TKE/form/FormPanelBaseClass.js"></script>
+    <script type="text/javascript" src="resources/js/TKE/form/FormPanelBaseCls.js"></script>
     <script type="text/javascript" src="resources/js/TKE/form/DepartmentForm.js"></script>
     <script type="text/javascript" src="resources/js/TKE/form/EmployeeForm.js"></script>
-    <script type="text/javascript" src="resources/js/TKE/listpanel/ListPanelBaseClass.js"></script>
+    <script type="text/javascript" src="resources/js/TKE/listpanel/ListPanelBaseCls.js"></script>
     <script type="text/javascript" src="resources/js/TKE/listpanel/DepartmentList.js"></script>
     <script type="text/javascript" src="resources/js/TKE/listpanel/EmployeeList.js"></script>
     <script type="text/javascript" src="resources/js/TKE/grid/EmployeeGridPanel.js"></script>

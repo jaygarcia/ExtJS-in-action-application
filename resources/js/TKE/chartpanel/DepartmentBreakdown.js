@@ -2,16 +2,16 @@ Ext.ns('TKE.chartpanel');
 
 /**
  * @class TKE.chartpanel.DepartmentBreakdown
- * @extends TKE.chartpanel.ChartPanelBaseClass
- * An canned implementation extension to {@link TKE.chartpanel.ChartPanelBaseClass}, which provides a means to display
+ * @extends TKE.chartpanel.ChartPanelBaseCls
+ * An canned implementation extension to {@link TKE.chartpanel.ChartPanelBaseCls}, which provides a means to display
  * the number of employees obtained, retained and lost within a given year. <br />
  * <br />
  * @constructor
  * @xtype department_breakdown_chart
  **/
-TKE.chartpanel.DepartmentBreakdown = Ext.extend(TKE.chartpanel.ChartPanelBaseClass, {
+TKE.chartpanel.DepartmentBreakdown = Ext.extend(TKE.chartpanel.ChartPanelBaseCls, {
     //private
-    //An implementation of the {@link TKe.chartpanel.ChartPanelBaseClass#buildChart TKE.chartpanel.ChartPanelBaseClass.buildChart} method.
+    //An implementation of the {@link TKe.chartpanel.ChartPanelBaseCls#buildChart TKE.chartpanel.ChartPanelBaseCls.buildChart} method.
     buildChart : function() {
         return {
             xtype      : 'stackedbarchart',
@@ -30,7 +30,7 @@ TKE.chartpanel.DepartmentBreakdown = Ext.extend(TKE.chartpanel.ChartPanelBaseCla
         };
     },
     // private
-    // An implementation of the {@link TKe.chartpanel.ChartPanelBaseClass#buildStore TKE.chartpanel.ChartPanelBaseClass.buildStore} method.
+    // An implementation of the {@link TKe.chartpanel.ChartPanelBaseCls#buildStore TKE.chartpanel.ChartPanelBaseCls.buildStore} method.
     buildStore : function() {
         return {
             xtype    : 'jsonstore',
@@ -42,7 +42,7 @@ TKE.chartpanel.DepartmentBreakdown = Ext.extend(TKE.chartpanel.ChartPanelBaseCla
         };
     },
     //private
-    // An implementation of the {@link TKe.chartpanel.ChartPanelBaseClass#buildSeries TKE.chartpanel.ChartPanelBaseClass.buildSeries} method.
+    // An implementation of the {@link TKe.chartpanel.ChartPanelBaseCls#buildSeries TKE.chartpanel.ChartPanelBaseCls.buildSeries} method.
     buildSeries : function() {
         var seriesStyles = this.seriesStyles;
 

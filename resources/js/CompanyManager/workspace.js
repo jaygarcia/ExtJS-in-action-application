@@ -28,6 +28,7 @@ CompanyManager.workspace = function() {
 
         buildLoginWindow : function() {
             return new TKE.window.UserLoginWindow({
+                title   : 'Login to Department Manager',
                 scope   : this,
                 handler : this.onLogin
             });
@@ -39,6 +40,7 @@ CompanyManager.workspace = function() {
                 layout     : 'card',
                 activeItem : 0,
                 border     : false,
+                defaults   :  { workspace : this },
                 items      :  [
                     {
                         xtype  : 'dashboard'

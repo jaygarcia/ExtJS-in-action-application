@@ -1,24 +1,24 @@
 Ext.ns('TKE.chartpanel');
 /**
  * @class TKE.chartpanel.CompanySnapshot
- * @extends TKE.chartpanel.ChartPanelBaseClass
- * An canned implementation extension to {@link TKE.chartpanel.ChartPanelBaseClass}, which provides a means to display
+ * @extends TKE.chartpanel.ChartPanelBaseCls
+ * An canned implementation extension to {@link TKE.chartpanel.ChartPanelBaseCls}, which provides a means to display
  * the number of employees obtained, retained since the company's creation. <br />
  * <br />
  * <!--
- * {@link TKE.chartpanel.ChartPanelBaseClass#methodOne this is method one} <br/>
- * {@link TKE.chartpanel.ChartPanelBaseClass#methodOne} <br/>
+ * {@link TKE.chartpanel.ChartPanelBaseCls#methodOne this is method one} <br/>
+ * {@link TKE.chartpanel.ChartPanelBaseCls#methodOne} <br/>
  * {@link #methodOne another link} <br/>
  * {@link #methodOne} <br/>
- * {@link TKE.chartpanel.ChartPanelBaseClass} <br/>
- * {@link TKE.chartpanel.ChartPanelBaseClass sample class} <br/>
+ * {@link TKE.chartpanel.ChartPanelBaseCls} <br/>
+ * {@link TKE.chartpanel.ChartPanelBaseCls sample class} <br/>
  *  -->
  * @constructor
  * @xtype total_employees_chart
  **/
-TKE.chartpanel.CompanySnapshot = Ext.extend(TKE.chartpanel.ChartPanelBaseClass, {
+TKE.chartpanel.CompanySnapshot = Ext.extend(TKE.chartpanel.ChartPanelBaseCls, {
     //private
-    //An implementation of the {@link TKe.chartpanel.ChartPanelBaseClass#buildChart TKE.chartpanel.ChartPanelBaseClass.buildChart} method.
+    //An implementation of the {@link TKe.chartpanel.ChartPanelBaseCls#buildChart TKE.chartpanel.ChartPanelBaseCls.buildChart} method.
     buildChart : function() {
         return {
             xtype       : 'stackedcolumnchart',
@@ -37,7 +37,7 @@ TKE.chartpanel.CompanySnapshot = Ext.extend(TKE.chartpanel.ChartPanelBaseClass, 
         };
     },
     // private
-    // An implementation of the {@link TKe.chartpanel.ChartPanelBaseClass#buildStore TKE.chartpanel.ChartPanelBaseClass.buildStore} method.
+    // An implementation of the {@link TKe.chartpanel.ChartPanelBaseCls#buildStore TKE.chartpanel.ChartPanelBaseCls.buildStore} method.
     buildStore : function() {
         return  {
             xtype    : 'jsonstore',
@@ -49,7 +49,7 @@ TKE.chartpanel.CompanySnapshot = Ext.extend(TKE.chartpanel.ChartPanelBaseClass, 
         };
     },
     //private
-    // An implementation of the {@link TKe.chartpanel.ChartPanelBaseClass#buildSeries TKE.chartpanel.ChartPanelBaseClass.buildSeries} method.
+    // An implementation of the {@link TKe.chartpanel.ChartPanelBaseCls#buildSeries TKE.chartpanel.ChartPanelBaseCls.buildSeries} method.
     buildSeries : function() {
         var seriesStyles = this.seriesStyles;
 
