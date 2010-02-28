@@ -19,9 +19,9 @@ CompanyManager.DepartmentManager = Ext.extend(Ext.Panel, {
         immediateChanges       : 'Warning! Changes are <span style="color: red;">immediate</span>.',
         associatingEmployees   : 'Associating {0} employees to {1}',
         assocEmployeeSuccess   : 'Successfully associated {0} employee(s) with {1}.',
-        confirmDeactivateDept  : 'Are you sure you want to deactivate the {0} department and all of its employees?',
+        confirmDeleteDept      : 'Are you sure you want to deactivate the {0} department and all of its employees?',
         deactivatingDepartment : 'Deactivating {0}...',
-        succDeactivateDept     : '{0} and all associated employee(s) have been deleted successfully.' ,
+        succDeleteDept         : '{0} and all associated employee(s) have been deleted successfully.' ,
         savingData             : 'Saving {0}...',
         errorSavingDepartment  : 'There was an error saving the {0} department.',
         succSaveDepartment     : '{0} was saved successfully.'
@@ -73,7 +73,7 @@ CompanyManager.DepartmentManager = Ext.extend(Ext.Panel, {
                 editemployee    : this.onDeptFormEditEmployee,
                 deleteemployee  : this.onDeleteEmployees,
                 assocemployees  : this.onAssociateEmployees,
-                unsetdepartment : this.onDeptFormDeactivateDept
+                unsetdepartment : this.onDeptFormDeleteDept
             }
         };
     },
@@ -142,18 +142,18 @@ CompanyManager.DepartmentManager = Ext.extend(Ext.Panel, {
         Ext.MessageBox.alert('Error!', msg);
     },
 
-    onDeptFormDeactivateDept : function() {
+    onDeptFormDeleteDept : function() {
         var selectedDeptRecord =  this.getComponent('departmentList').getSelected();
-        var msg = String.format(this.msgs.confirmDeactivateDept, selectedDeptRecord.get('name'));
+        var msg = String.format(this.msgs.confirmDeleteDept, selectedDeptRecord.get('name'));
         Ext.MessageBox.confirm(
             this.msgs.immediateChanges,
             msg,
-            this.onConfirmDeactivateDept,
+            this.onConfirmDeleteDept,
             this
         );
     },
 
-    onConfirmDeactivateDept : function(btn) {
+    onConfirmDeleteDept : function(btn) {
         if (btn === 'yes') {
             var selectedDeptRecord = this.getComponent('departmentList').getSelected();
 
@@ -167,7 +167,7 @@ CompanyManager.DepartmentManager = Ext.extend(Ext.Panel, {
                 url          : 'departments/unsetDepartment',
                 scope        : this,
                 callback     : this.workspace.onAfterAjaxReq,
-                succCallback : this.onAfterConfirmDeactivateDept,
+                succCallback : this.onAfterConfirmDeleteDept,
                 params       : {
                     id : selectedDeptRecord.get('id')
                 }
@@ -175,11 +175,11 @@ CompanyManager.DepartmentManager = Ext.extend(Ext.Panel, {
         }
     },
 
-    onAfterConfirmDeactivateDept : function() {
+    onAfterConfirmDeleteDept : function() {
         var selectedDeptRecord = this.getComponent('departmentList').getSelected();
 
         var msg = String.format(
-            this.msgs.succDeactivateDept,
+            this.msgs.succDeleteDept,
             selectedDeptRecord.get('name')
         );
         Ext.MessageBox.alert('Success', msg);
@@ -245,18 +245,20 @@ CompanyManager.DepartmentManager = Ext.extend(Ext.Panel, {
 
     onDeleteEmployees : function(records) {
         var employees = this.spoolEmpIdsFromRecords(records);
-        var msg = String.format(this.msgs.deleteEmployeeConfirm, records.length);
-
-        Ext.MessageBox.confirm(
-            'Please Confirm',
-            msg,
-            function(btn) {
-                if (btn === 'yes')  {
-                    this.onConfirmDeleteEmployees(records, employees);
-                }
-            },
-            this
-         );
+        if (employees.length > 0) {
+            var msg = String.format(this.msgs.deleteEmployeeConfirm, records.length);
+            
+            Ext.MessageBox.confirm(
+                'Please Confirm',
+                msg,
+                function(btn) {
+                    if (btn === 'yes')  {
+                        this.onConfirmDeleteEmployees(records, employees);
+                    }
+                },
+                this
+             );
+        }
     },
 
     onConfirmDeleteEmployees : function(records, employees) {
@@ -267,7 +269,7 @@ CompanyManager.DepartmentManager = Ext.extend(Ext.Panel, {
             url          : 'employees/deleteEmployees',
             scope        : this,
             callback     : this.workspace.onAfterAjaxReq,
-            succCallback : this.onAfterSuccDeleteEmployees,
+            succCallback : this.onAfterConfirmDeleteEmployees,
             records      : records,
             params       : {
                 employeeIds : Ext.encode(employees)
@@ -275,7 +277,7 @@ CompanyManager.DepartmentManager = Ext.extend(Ext.Panel, {
         });
     },
 
-    onAfterSuccDeleteEmployees : function(jsonData, options) {
+    onAfterConfirmDeleteEmployees : function(jsonData, options) {
         Ext.each(options.records, function(record) {
             record.store.remove(record);
         });

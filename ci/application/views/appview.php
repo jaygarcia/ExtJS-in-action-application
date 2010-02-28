@@ -26,6 +26,7 @@
     <script type="text/javascript" src="resources/js/TKE/listpanel/EmployeeList.js"></script>
     <script type="text/javascript" src="resources/js/TKE/grid/EmployeeGridPanel.js"></script>
     <script type="text/javascript" src="resources/js/TKE/window/EmployeeAssociationWindow.js"></script>
+    <script type="text/javascript" src="resources/js/TKE/window/UserLoginWindow.js"></script>
 
     <!-- Application JavaScript -->
     <script type="text/javascript" src="resources/js/CompanyManager/workspace.js"></script>

@@ -27,72 +27,30 @@ CompanyManager.workspace = function() {
         },
 
         buildLoginWindow : function() {
-            var formItemDefaults = {
-                allowBlank : false,
-                anchor     : '-5',
-                listeners  : {
-                    scope      : this,
-                    specialkey : function(field, e) {
-                        if (e.getKey() === e.ENTER) {
-                            this.onLogin();
-                        }
-                    }
-                }
-            };
-
-            var formLoginItems = [
-                {
-                    fieldLabel : 'User Name',
-                    name       : 'user'
-                },
-                {
-                    inputType  : 'password',
-                    fieldLabel : 'Password',
-                    name       : 'password'
-                }
-            ];
-
-            return  new Ext.Window({
-                width     : 250,
-                height    : 125,
-                modal     : true,
-                draggable : false,
-                title     : 'Login to Department Manager',
-                layout    : 'fit',
-                center    : true,
-                closable  : false,
-                resizable : false,
-                border    : false,
-                items     : {
-                    xtype       : 'form',
-                    defaultType : 'textfield',
-                    labelWidth  : 70,
-                    frame       : true,
-                    url         : 'userlogin.php',
-                    labelAlign  : 'right',
-                    defaults    : formItemDefaults,
-                    items       : formLoginItems
-                },
-                buttons : [
-                    {
-                        text    : 'Login',
-                        handler : this.onLogin,
-                        scope   : this
-                    }
-                ]
+            return new TKE.window.UserLoginWindow({
+                scope   : this,
+                handler : this.onLogin
             });
         },
     
-
+        
         buildViewport : function() {
             cardPanel = new Ext.Panel({
                 layout     : 'card',
                 activeItem : 0,
                 border     : false,
-                items      :  {
-                    xtype   : 'dashboard'
-                },
-                tbar       : [
+                items      :  [
+                    {
+                        xtype  : 'dashboard'
+                    },
+                    {
+                        xtype  : 'departmentmanager'
+                    },
+                    {
+                        xtype  : 'employeemanager'
+                    }
+                ],
+                tbar : [
                     {
                         text          : 'Dashboard',
                         iconCls       : 'icon-chart_curve',
@@ -139,7 +97,6 @@ CompanyManager.workspace = function() {
             });
             Ext.getBody().unmask();
         },
-
         onLogin :  function() {
             var form = loginWindow.get(0);
             if (form.getForm().isValid()) {
@@ -199,23 +156,12 @@ CompanyManager.workspace = function() {
         },
 
         onSwitchPanel : function(btn) {
-            var newPanel,
-                xtype  = btn.itemType,
-                panels = cardPanel.findByType(xtype);
-
-            if (panels.length < 1) {
-                newPanel = cardPanel.add({
-                    xtype     : xtype,
-                    workspace : this
-                });
-                cardPanel.doLayout();
-            }
-            else {
+            var xtype    = btn.itemType,
+                panels   = cardPanel.findByType(xtype),
                 newPanel = panels[0];
-            }
 
             var newCardIndex = cardPanel.items.indexOf(newPanel);
-            this.switchToCard(newCardIndex)
+            this.switchToCard(newCardIndex);
         },
         switchToCard : function(newCardIndex) {
             var layout         = cardPanel.getLayout(),
