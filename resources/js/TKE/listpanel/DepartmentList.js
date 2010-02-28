@@ -8,7 +8,6 @@ Ext.ns("TKE.listpanel");
  * @constructor
  * @param {Object} config The config object
  **/
-
 TKE.listpanel.DepartmentList = Ext.extend(TKE.listpanel.ListPanelBaseCls, {
     url : 'departments/getList',
     buildListView : function() {

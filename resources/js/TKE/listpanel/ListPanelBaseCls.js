@@ -20,20 +20,13 @@ TKE.listpanel.ListPanelBaseCls = Ext.extend(Ext.Panel, {
         this.relayEvents(this.getView(), ['click']);
         this.relayEvents(this.getStore(), ['load']);
     },
-    getView : function() {
-        return this.items.items[0];
-    },
-
+    
     buildListView : function() {
         return {};
     },
     
     buildStore : function() {
         return { xtype : 'jsonstore' };
-    },
-
-    refreshView : function() {
-        this.getView().store.reload();
     },
 
     clearView : function() {
@@ -55,6 +48,9 @@ TKE.listpanel.ListPanelBaseCls = Ext.extend(Ext.Panel, {
     clearSelections : function() {
         return this.getView().clearSelections();
     },
+    getView : function() {
+        return this.items.items[0];
+    },
 
     getStore : function() {
         return this.getView().store;
@@ -67,6 +63,10 @@ TKE.listpanel.ListPanelBaseCls = Ext.extend(Ext.Panel, {
         return this.getSelectedRecords()[0];    
     },
     
+    refreshView : function() {
+        this.getView().store.reload();
+    },
+
     selectById : function(id) {
         var view = this.getView();
         id = id || false;

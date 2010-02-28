@@ -2,8 +2,9 @@ Ext.ns("TKE.window");
 
 /**
  * @class TKE.window.UserLoginWindow
- * A class to manage user logins
  * @extends Ext.Window
+ * A class to manage user logins
+ * @constructor
  */
 TKE.window.UserLoginWindow = Ext.extend(Ext.Window, {
     /**

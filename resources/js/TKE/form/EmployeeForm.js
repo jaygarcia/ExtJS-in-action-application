@@ -90,7 +90,7 @@ TKE.form.EmployeeForm = Ext.extend(TKE.form.FormPanelBaseCls, {
             emailDobContainer         = this.buildEmailDobContainer(),
             cityStateZip              = this.buildCityStateZipContainer(),
             phoneNumbers              = this.buildPhoneNumbersContainer();
-             
+
         return [
             {
                 xtype : 'hidden',
@@ -177,8 +177,8 @@ TKE.form.EmployeeForm = Ext.extend(TKE.form.FormPanelBaseCls, {
             anchor      : '-10',
             defaultType : 'container',
             defaults    : {
-                width      : 200,
-                layout     : 'form'
+                width  : 200,
+                layout : 'form'
             },
             items       : [
                 {
@@ -213,7 +213,7 @@ TKE.form.EmployeeForm = Ext.extend(TKE.form.FormPanelBaseCls, {
             defaultType : 'container',
             anchor      : '-10',
             defaults    : {
-                layout     : 'form'
+                layout : 'form'
             },
             items   : [
                 {

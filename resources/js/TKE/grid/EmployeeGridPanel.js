@@ -36,6 +36,7 @@ TKE.grid.EmployeeGridPanel = Ext.extend(Ext.grid.GridPanel, {
         this.store = this.buildStore();
         TKE.grid.EmployeeGridPanel.superclass.initComponent.call(this);
     },
+    
     buildStore : function() {
         return  {
             xtype    : 'jsonstore',
@@ -52,22 +53,22 @@ TKE.grid.EmployeeGridPanel = Ext.extend(Ext.grid.GridPanel, {
         };
     },
 
-    add : function(r) {
+    add : function(rec) {
         var store = this.store;
         var sortInfo = store.sortInfo;
         
-        if (Ext.isArray(r)) {
-            Ext.each(r, function(rObj, ind) {
+        if (Ext.isArray(rec)) {
+            Ext.each(rec, function(rObj, ind) {
                 if (! (rObj instanceof Ext.data.Record)) {
-                    r[ind] = new this.store.recordType(rObj);
+                    rec[ind] = new this.store.recordType(rObj);
                 }
             });
         }
-        else if (Ext.isObject(r) && ! (r instanceof Ext.data.Record)) {
-            r = new this.store.recordType(r);
+        else if (Ext.isObject(rec) && ! (rec instanceof Ext.data.Record)) {
+            rec = new this.store.recordType(rec);
         }
-        
-        store.add(r);
+
+        store.add(rec);
         store.sort(sortInfo.field, sortInfo.direction);
     },
     loadData : function(d) {

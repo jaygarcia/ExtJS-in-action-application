@@ -23,7 +23,7 @@ TKE.form.DepartmentForm = Ext.extend(TKE.form.FormPanelBaseCls, {
     //private
     initComponent : function() {
         this.items =  [
-            this.buidGeneralInfoForm(),
+            this.buildGeneralInfoForm(),
             this.buildEmployeeGrid()
         ];
 
@@ -62,18 +62,18 @@ TKE.form.DepartmentForm = Ext.extend(TKE.form.FormPanelBaseCls, {
              */
             deleteemployee  : true,
             /**
-             * @event unsetdepartment
+             * @event deletedepartment
              * Fires when the delete department button in the top of this panel is clicked.
              * @param {Number} ID The id of the department that is currently being viewed.
              */
-            unsetdepartment : true
+            deletedepartment : true
         });
     },
 
     //private
     // Constructs the top portion of the panel.
     // @return {Object} A config object to contain the two halves of the form.
-    buidGeneralInfoForm : function() {
+    buildGeneralInfoForm : function() {
         var leftHalf = this.buildGeneralInfoFormLeftHalf();
 
         var rightHalf = {
@@ -128,7 +128,7 @@ TKE.form.DepartmentForm = Ext.extend(TKE.form.FormPanelBaseCls, {
                 text    : 'Deactivate Department',
                 iconCls : 'icon-delete',
                 scope   : this,
-                handler : this.onUnsetDepartment
+                handler : this.onDeleteDepartment
             }
         ];
     },
@@ -169,8 +169,8 @@ TKE.form.DepartmentForm = Ext.extend(TKE.form.FormPanelBaseCls, {
     //@return {Object} TKE.grid.EmployeeGridPanel
     buildEmployeeGrid : function() {
         var tbar = [
-                '<b>Employees</b>',
-                '->',
+            '<b>Employees</b>',
+            '->',
             {
                 text    : 'New Employee',
                 iconCls : 'icon-user_add',
@@ -233,12 +233,7 @@ TKE.form.DepartmentForm = Ext.extend(TKE.form.FormPanelBaseCls, {
     //private
     //Resets the form
     onReset : function() {
-        if (this.data) {
-            this.loadData(this.data);
-        }
-        else {
-            this.getForm().reset();
-        }
+        this.getForm().reset();
     },
 
     //private
@@ -250,6 +245,7 @@ TKE.form.DepartmentForm = Ext.extend(TKE.form.FormPanelBaseCls, {
         }
     },
 
+    //
     onEditEmployee : function() {
         var employeeGrid = this.getComponent('employeeGrid');
         var selectedEmployeeRec = employeeGrid.getSelected()[0];
@@ -282,10 +278,10 @@ TKE.form.DepartmentForm = Ext.extend(TKE.form.FormPanelBaseCls, {
         }
     },
      //private
-    //Fires the unsetdepartment event.
-    onUnsetDepartment : function() {
+    //Fires the deletedepartment event.
+    onDeleteDepartment : function() {
         if (this.data) {
-            this.fireEvent('unsetdepartment', this.data.id);
+            this.fireEvent('deletedepartment', this.data.id);
         }
     },
 

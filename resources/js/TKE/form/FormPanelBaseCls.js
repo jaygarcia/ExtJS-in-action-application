@@ -7,7 +7,6 @@ Ext.ns('TKE.form');
  * <br />
  * @constructor
  * @param {Object} config The config object
- * @xtype employeeform
  **/
 TKE.form.FormPanelBaseCls = Ext.extend(Ext.form.FormPanel, {
 
@@ -16,7 +15,7 @@ TKE.form.FormPanelBaseCls = Ext.extend(Ext.form.FormPanel, {
         Ext.applyIf(config, {
             trackResetOnLoad : true
         });
-        TKE.form.FormPanelBaseCls.superclass.constructor.call(this, config)
+        TKE.form.FormPanelBaseCls.superclass.constructor.call(this, config);
     },
 
     getValues : function() {

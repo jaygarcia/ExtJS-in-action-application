@@ -23,17 +23,23 @@ TKE.window.EmployeeAssociationWindow = Ext.extend(Ext.Window, {
     center         : true,
     constrain      : true,
     resizable      : true,
+    /**
+     * @cfg departmentName {String} The name of the department that will be modified
+     */
     departmentName : ' ',
+    /**
+     * @cfg departmentId {Int} The ID of the selected department to be updated
+     */
     departmentId   : null,
     layout         :  {
         type  : 'hbox',
         align : 'stretch'
     },
-
+    // @private
     initComponent  : function() {
 
         Ext.apply(this, {
-            title   : 'Add employees to ' + this.departmentName,
+            title   : 'Add employees to ' + this.departmentName, // dynamically set the title
             buttons : this.buildButtons(),
             items   : [
                 this.buildListViewPanel(),

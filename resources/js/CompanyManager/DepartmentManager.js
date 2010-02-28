@@ -67,13 +67,13 @@ CompanyManager.DepartmentManager = Ext.extend(Ext.Panel, {
             border    : false,
             style     : 'border-left: 1px solid #99BBE8;',
             listeners : {
-                scope           : this,
-                save            : this.onDeptFormSave,
-                newemployee     : this.onDeptFormNewEmployee,
-                editemployee    : this.onDeptFormEditEmployee,
-                deleteemployee  : this.onDeleteEmployees,
-                assocemployees  : this.onAssociateEmployees,
-                unsetdepartment : this.onDeptFormDeleteDept
+                scope            : this,
+                save             : this.onDeptFormSave,
+                newemployee      : this.onDeptFormNewEmployee,
+                editemployee     : this.onDeptFormEditEmployee,
+                deleteemployee   : this.onDeleteEmployees,
+                assocemployees   : this.onAssociateEmployees,
+                deletedepartment : this.onDeptFormDeleteDept
             }
         };
     },
