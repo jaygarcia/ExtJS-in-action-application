@@ -89,4 +89,4 @@ TKE.grid.EmployeeGridPanel = Ext.extend(Ext.grid.GridPanel, {
     }
 });
 
-Ext.reg('employeegridpanel', TKE.grid.EmployeeGridPanel)
+Ext.reg('employeegridpanel', TKE.grid.EmployeeGridPanel);
