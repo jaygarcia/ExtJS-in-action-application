@@ -33,9 +33,9 @@ TKE.listpanel.ListPanelBaseCls = Ext.extend(Ext.Panel, {
         this.getStore().removeAll();
     },
 
-    createAndSelectRecord : function(o) {
+    createAndSelectRecord : function(obj) {
         var view = this.getView();
-        var record = new view.store.recordType(o);
+        var record = new view.store.recordType(obj);
 
         view.store.addSorted(record);
 

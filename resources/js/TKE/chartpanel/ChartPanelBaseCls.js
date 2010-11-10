@@ -18,7 +18,7 @@ Ext.ns('TKE.chartpanel');
  * @constructor
  * @param {Object} config The config object
  **/
-TKE.chartpanel.ChartPanelBaseCls = Ext.extend(Ext.Panel, {
+TKE.chartpanel.ChartPanelBaseCls = Ext.extend(Ext.Panel , {
     frame       : false,
     layout      : 'fit',
     //private

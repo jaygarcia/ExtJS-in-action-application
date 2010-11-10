@@ -134,7 +134,7 @@ CompanyManager.EmployeeManager = Ext.extend(Ext.Panel, {
         this.clearMask();
     },
     
-    onNewEmployee : function(selectedDepartment) {
+    onNewEmployee : function() {
         this.getComponent('employeeList').clearSelections();
         this.prepareFormForNew();
     },
